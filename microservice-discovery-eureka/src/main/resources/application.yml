@@ -1,0 +1,134 @@
+spring:
+  profiles:
+    active: single
+  application:
+    name: Eureka-server
+    
+---
+#single-point
+spring:
+  profiles: single
+server:
+  port: 8761
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://user:password123@peer4:8761/eureka/
+  instance:
+    hostname: peer1
+security:
+  basic: 
+    enabled: true
+  user:
+    username: user
+    password: password123
+    
+---
+#oauth21-8761
+spring:
+  profiles: oauth21
+server:
+  port: 8761
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://user:password123@peer4:8762/eureka/
+  instance:
+    hostname: peer1
+security:
+  basic: 
+    enabled: true
+  user:
+    username: user
+    password: password123
+    
+---
+#oauth22-8762
+spring:
+  profiles: oauth22
+server:
+  port: 8762
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://user:password123@peer1:8761/eureka/
+  instance:
+    hostname: peer4
+security:
+  basic: 
+    enabled: true
+  user:
+    username: user
+    password: password123
+        
+    
+---
+#peer1
+spring:
+  profiles: peer1
+server:
+  port: 8761
+eureka:
+  instance:
+    PreferIpAddress: true
+    hostname: peer1
+    instance_id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@192.168.56.1:8762/eureka/
+security:
+  basic: 
+    enabled: true
+  user:
+    username: user
+    password: password123
+    
+    
+---
+#peer2
+spring:
+  profiles: peer2
+server:
+  port: 8762
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@192.168.56.1:8761/eureka/
+  instance:
+    PreferIpAddress: true
+    hostname: peer4
+    instance_id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+security:
+  basic: 
+    enabled: true
+  user:
+    username: user
+    password: password123
+    
+    
+---
+#peer3
+spring:
+  profiles: peer3
+server:
+  port: 8762
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry:  true
+    serviceUrl:
+      defaultZone: http://user:password123@peer1:8761/eureka/,http://user:password123@peer2:8761/eureka/
+  instance:
+    hostname: peer3
+security:
+  basic: 
+    enabled: true
+  user:
+    username: user
+    password: password123

@@ -1,0 +1,31 @@
+debug: true
+
+server:
+  port: 8082
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    h2:
+      platform: h2
+      schema: classpath:schema.sql
+      data: classpath:data.sql
+    oauth:
+      url: jdbc:mysql://192.168.99.100:3306/microservice?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: root321
+      schema: classpath:schema.sql
+      data: classpath:data.sql
+  application:
+    name: microservice-provider-user
+logging:
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+    com.itmuch: DEBUG
+

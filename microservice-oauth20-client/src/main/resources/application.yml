@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  
+security:  
+  oauth2:  
+    client:  
+      client-id: oauth_client_ren  
+      client-secret: oauth_client_secret_ren  
+      access-token-uri: http://localhost:8081/oauth/token  
+      user-authorization-uri: http://localhost:8081/oauth/authorize
+    resource:  
+      userInfoUri: http://localhost:8081/api/user
+
+logging:
+  level:
+    root: debug

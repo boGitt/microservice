@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: microservice-gateway-zuul-zipkin
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: guest
+    password: guest
+  sleuth:
+    sampler:
+      percentage: 1.0
+
+server:
+  port: 8040
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka/
+zuul:
+  #ignoredServices: microservice-consumer-movie-feign #'*'
+  routes:
+    providerUser:
+      path: /zuulusers/**
+      serviceId: microservice-provider-user
+    consumerMovie:
+      path: /zuulmovie/**
+      serviceId: MICROSERVICE-CONSUMER-MOVIE-FEIGN-HYSTRIX
+
+
+#ribbon:
+#  eureka:
+#    enabled: false
+#microservice-provider-user:
+#  ribbon:
+#    listOfServers: example.com,google.com

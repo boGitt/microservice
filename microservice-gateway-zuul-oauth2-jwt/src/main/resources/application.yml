@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: microservice-gateway-zuul-oauth2-jwt
+  datasource:
+    url: jdbc:mysql://192.168.99.100:3306/microservice?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root321
+server:
+  port: 8040
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka/
+zuul:
+  #ignoredServices: microservice-consumer-movie-feign #'*'
+  routes:
+    providerUser:
+      path: /zuulusers/**
+      serviceId: microservice-provider-user
+    consumerMovie:
+      path: /zuulmovie/**
+      serviceId: MICROSERVICE-CONSUMER-MOVIE-FEIGN-HYSTRIX
+    oauth2:
+      path: /oauth2jwt/**
+      serviceId: oauth2-jwt
+
+#ribbon:
+#  eureka:
+#    enabled: false
+#microservice-provider-user:
+#  ribbon:
+#    listOfServers: example.com,google.com
+
+
+oauth:
+  resource_id: my_resource_id
